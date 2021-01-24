@@ -1,21 +1,27 @@
-// const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-// const path = require("path");
 const fs = require("fs");
+const util = require("util");
 
-// const OUTPUT_DIR = path.resolve(__dirname, "output");
-// const outputPath = path.join(OUTPUT_DIR, "team.html");
+const path = require("path");
 
-// const render = require("./lib/htmlRenderer");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-//initual function ran only once because there is only one manager
-async function addManager() {
-    const answer = await inquirer.prompt([
+const render = require("./lib/htmlRenderer");
+
+const writeFileAsync = util.promisify(fs.writeFile);
+
+const assembleTeam = [];
+
+// initual function ran only once because there is only one manager
+const addManager = async function() {
+    inquirer.prompt([
         {
             type: "input",
-            name: "Name",
+            name: "name",
             message: "What is the Team Manager's name?"
         },
         {
@@ -34,16 +40,52 @@ async function addManager() {
             message: "What is the Team Manager's office phone number?"
         },
         {
-            type: "checkbox",
-            name: "role",
-            message: "Please select a role:",
-            choices: [
-                new inquirer.Separator(' = There is but one to rule them all! = '),
-                {
-                    name: "Manager",
-                    checked: true
-                }
-            ]
+            type: "list",
+            name: "addTeamMember",
+            message: "Would you like to add any more Members to your Team?",
+            choices: ['Engineer', 'Intern', 'No more Team Members to add.']
+        }
+    ])
+    .then(answers => {
+        console.log(answers);
+        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+        assembleTeam.push(manager);
+        // return answers;
+        switch(answers.addTeamMember){
+            case 'Engineer':
+                addEngineer();
+                break;
+            case 'Intern':
+                addIntern();
+                break;
+            default:
+                generateTeam();
+        };
+    }); 
+        
+};
+
+const addEngineer = async function() {
+    const answers = await inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the engineer's name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "What is the engineer's ID?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "What is the engineer's email?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "What is the engineer's GitHub account Username?",
+            name: "github"
         },
         {
             type: "list",
@@ -51,21 +93,89 @@ async function addManager() {
             message: "Would you like to add any more Members to your Team?",
             choices: ['Engineer', 'Intern', 'No more Team Members to add.']
         }
-    ]);
-    // switch(answer.addTeamMember){
-    //     case 'Engineer':
-    //         addEngineer()
-    //         break;
-    //     case 'Intern':
-    //         addIntern()
-    //         break;
-    //     default:
-    //         assembleTeam()
-    // }
-    console.log(answer);   
+    ])
+    .then(answers => {
+        console.log(answers);
+        const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github);
+        assembleTeam.push(engineer);
+        switch(answers.addTeamMember){
+            case 'Engineer':
+                addEngineer()
+                break;
+            case 'Intern':
+                addIntern()
+                break;
+            default:
+                generateTeam()
+        };
+      
+    });
 };
 
-addManager();
+const addIntern = async function() {
+    const answers = await inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the intern's name?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "What is the intern's ID?",
+            name: "id"
+        },
+        {
+            type: "input",
+            message: "What is the intern's email?",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "What school is the intern from?",
+            name: "school"
+        },
+        {
+            type: "list",
+            name: "addTeamMember",
+            message: "Would you like to add any more Members to your Team?",
+            choices: ['Engineer', 'Intern', 'No more Team Members to add.']
+        }
+    ])
+    .then(answers => {
+        console.log(answers);
+        const intern = new Intern (answers.name, answers.id, answers.email, answers.school);
+        assembleTeam.push(intern);
+        switch(answers.addTeamMember){
+            case 'Engineer':
+                addEngineer()
+                break;
+            case 'Intern':
+                addIntern()
+                break;
+            default:
+                generateTeam()
+        };
+    });
+};
+ function generateTeam() {
+    const r = render(assembleTeam);
+    writeFileAsync(outputPath, r);
+ }
+
+async function init() {
+        
+    try {
+        await addManager(assembleTeam);     
+        
+       
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+init();
+
+
 
 
 // Write code to use inquirer to gather information about the development team members,
