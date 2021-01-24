@@ -4,7 +4,7 @@ Utilizing the Node JS Inquirer, and Jest Libraries we can render Team Members in
 
 [Walkthrough Video](https://drive.google.com/file/d/1LYPubLn6zX_uRkoVoCX8jc5uXe7y4ex7/view)
 
-![Visual of the HTML Render 1/24/21 7AM]()
+![Visual of the HTML Render 1/24/21 7AM](https://github.com/gcvarela21/Team_Profile_Machine/blob/main/Assets/team_html.png?raw=true)
 
 ## Table of Contents
 
