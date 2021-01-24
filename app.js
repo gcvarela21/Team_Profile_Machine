@@ -157,6 +157,7 @@ const addIntern = async function() {
         };
     });
 };
+
  function generateTeam() {
     const r = render(assembleTeam);
     writeFileAsync(outputPath, r);
