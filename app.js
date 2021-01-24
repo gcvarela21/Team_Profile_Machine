@@ -1,14 +1,71 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+// const Manager = require("./lib/Manager");
+// const Engineer = require("./lib/Engineer");
+// const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-const path = require("path");
+// const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./lib/htmlRenderer");
+// const render = require("./lib/htmlRenderer");
+
+//initual function ran only once because there is only one manager
+async function addManager() {
+    const answer = await inquirer.prompt([
+        {
+            type: "input",
+            name: "Name",
+            message: "What is the Team Manager's name?"
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "What is the Team Manager's ID Number?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is the Team Manager's email address?"
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "What is the Team Manager's office phone number?"
+        },
+        {
+            type: "checkbox",
+            name: "role",
+            message: "Please select a role:",
+            choices: [
+                new inquirer.Separator(' = There is but one to rule them all! = '),
+                {
+                    name: "Manager",
+                    checked: true
+                }
+            ]
+        },
+        {
+            type: "list",
+            name: "addTeamMember",
+            message: "Would you like to add any more Members to your Team?",
+            choices: ['Engineer', 'Intern', 'No more Team Members to add.']
+        }
+    ]);
+    // switch(answer.addTeamMember){
+    //     case 'Engineer':
+    //         addEngineer()
+    //         break;
+    //     case 'Intern':
+    //         addIntern()
+    //         break;
+    //     default:
+    //         assembleTeam()
+    // }
+    console.log(answer);   
+};
+
+addManager();
 
 
 // Write code to use inquirer to gather information about the development team members,
