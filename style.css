@@ -1,0 +1,74 @@
+  
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: rgb(128, 252, 13);
+	background: -moz-linear-gradient(-45deg, rgba(128, 252, 13, 1) 0%, rgba(45, 130, 250, 1) 100%);
+	background: -webkit-linear-gradient(-45deg, rgba(128, 252, 13, 1) 0%, rgba(45, 130, 250, 1) 100%);
+	background: linear-gradient(135deg, rgb(128, 252, 13) 0%, rgba(45, 130, 250, 1) 100%);
+}
+
+body, h1, h2, h3, i, ul, li {
+    background: none;
+    background-color: none;
+    color: white;
+    text-decoration-color: white;
+}
+
+/* unvisited link */
+a:link {
+    color: rgb(153, 153, 153);
+  }
+  
+  /* visited link */
+  a:visited {
+    color: rgb(162, 253, 162);
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: white;
+  }
+  
+  /* selected link */
+  a:active {
+    color: rgb(73, 73, 73);
+  }
+
+.card, .employee-card, .card-header, .card-body, .jumbotron, .team-heading, .list-group, .list-group-item {
+    background: none;
+    background-color: none;
+}
+
+.hazy {
+    background-color: rgba(0, 0, 0, 0.6);;
+}
+
+#man i {
+    color: rgb(252, 41, 13);
+}
+#man h3 {
+    color: rgb(128, 252, 13);
+}
+
+#int i {
+    color: rgb(119, 0, 255);
+}
+#int h3 {
+    color: rgb(251, 134, 0);
+}
+
+#eng i {
+    color: rgb(255, 238, 0);
+}
+#eng h3 {
+    color: rgb(0, 96, 251);
+}
+
+.marg {
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 30px;
+}

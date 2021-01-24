@@ -4,6 +4,8 @@ Utilizing the Node JS Inquirer, and Jest Libraries we can render Team Members in
 
 [Walkthrough Video](https://drive.google.com/file/d/1LYPubLn6zX_uRkoVoCX8jc5uXe7y4ex7/view)
 
+![Visual of the HTML Render 1/24/21 7AM]()
+
 ## Table of Contents
 
 * [Installation](#installation)
@@ -41,7 +43,7 @@ v15.2.0
 ```
 
 Step 4:
-If Node.js isn't intstall on you computer visit the [node webpage]() for the program download and follow the instructions for proper installation. Once Installed and verified open your project the project folder location us the command:
+If Node.js isn't intstall on you computer visit the [node webpage](https://nodejs.org/en/download/) for the program download and follow the instructions for proper installation. Once Installed and verified open your project the project folder location us the command:
 
 ```javascript
 npm init -y
@@ -108,7 +110,7 @@ The initail Prompt information is captured with in the .then() and triggers the 
 ```javascript
 .then(answers => {
         console.log(answers);
-        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber, "Manager");
         assembleTeam.push(manager);
         // return answers;
         switch(answers.addTeamMember){
@@ -122,6 +124,17 @@ The initail Prompt information is captured with in the .then() and triggers the 
                 generateTeam();
         };
     }); 
+```
+
+When the user no longer needs to add more members to the team, the generateTeam(); is trggered and pulls the data from the assebleTeam array into the render(); function that is linked to the htmlRender.js. The html elements that are strung together by render(); are pushed into a new document called "team.html" that is located in the output folder. Openenig this file from this folder into a live server or web browser will visually bring it together.
+
+```javascript
+ function generateTeam() {
+    const avengersAssemble = render(assembleTeam);
+    writeFileAsync(outputPath, avengersAssemble);
+    console.log(assembleTeam);
+    console.log("team.html has been generated in folder named: output");
+ } 
 ```
 
 You can find my project repository [Here](https://github.com/gcvarela21/Team_Profile_Machine/)

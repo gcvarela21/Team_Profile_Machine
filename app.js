@@ -15,6 +15,7 @@ const render = require("./lib/htmlRenderer");
 const writeFileAsync = util.promisify(fs.writeFile);
 
 const assembleTeam = [];
+const roles = [];
 
 // initual function ran only once because there is only one manager
 const addManager = async function() {
@@ -47,18 +48,20 @@ const addManager = async function() {
         }
     ])
     .then(answers => {
-        console.log(answers);
-        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+        // console.log(answers);
+        const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber, answers.addTeamMember, "Manager");
         assembleTeam.push(manager);
-        // return answers;
         switch(answers.addTeamMember){
             case 'Engineer':
+                roles.push("Manager");
                 addEngineer();
                 break;
             case 'Intern':
+                roles.push("Manager");
                 addIntern();
                 break;
-            default:
+            default:             
+                roles.push("Manager");
                 generateTeam();
         };
     }); 
@@ -95,18 +98,21 @@ const addEngineer = async function() {
         }
     ])
     .then(answers => {
-        console.log(answers);
-        const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github);
+        // console.log(answers);
+        const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github, answers.addTeamMember, "Engineer");
         assembleTeam.push(engineer);
         switch(answers.addTeamMember){
             case 'Engineer':
-                addEngineer()
+                addEngineer();
                 break;
+
             case 'Intern':
-                addIntern()
+                addIntern();
+
                 break;
             default:
-                generateTeam()
+                roles.push("Engineer");
+                generateTeam();
         };
       
     });
@@ -142,31 +148,35 @@ const addIntern = async function() {
         }
     ])
     .then(answers => {
-        console.log(answers);
-        const intern = new Intern (answers.name, answers.id, answers.email, answers.school);
+        // console.log(answers);
+        const intern = new Intern (answers.name, answers.id, answers.email, answers.school, answers.addTeamMember, "Intern");
         assembleTeam.push(intern);
         switch(answers.addTeamMember){
-            case 'Engineer':
-                addEngineer()
+            case 'Engineer':               
+                addEngineer();
                 break;
-            case 'Intern':
-                addIntern()
+
+            case 'Intern':                
+                addIntern();
                 break;
-            default:
-                generateTeam()
+
+            default:                
+                generateTeam();
         };
     });
 };
 
  function generateTeam() {
-    const r = render(assembleTeam);
-    writeFileAsync(outputPath, r);
+    const avengersAssemble = render(assembleTeam);
+    writeFileAsync(outputPath, avengersAssemble);
+    console.log(assembleTeam);
+    console.log("team.html has been generated in folder named: output");
  }
 
 async function init() {
         
     try {
-        await addManager(assembleTeam);     
+        await addManager();     
         
        
     } catch (err) {
